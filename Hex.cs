@@ -80,7 +80,10 @@ namespace HexGrid
         public readonly int Z;
 
 
-        /// <summary> Returns a new <see cref="Hex"/> struct with the given [x] and [y] values. The 'Z' value is calculated from [x] and [y]. </summary>
+        /// <summary>
+        /// Returns a new <see cref="Hex"/> struct with the given [x] and [y] values.
+        /// <para> The 'Z' value is calculated from [x] and [y]. </para>
+        /// </summary>
         /// <param name="x"> The 'X' value to assign to this <see cref="Hex"/> struct. </param>
         /// <param name="y"> The 'X' value to assign to this <see cref="Hex"/> struct. </param>
         public Hex(int x, int y)
