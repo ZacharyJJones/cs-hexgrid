@@ -68,14 +68,14 @@ namespace HexGrid
                 case Direction.Yz: return new Hex(0, 1);
                 case Direction.Zx: return new Hex(-1, 0);
                 case Direction.Zy: return new Hex(0, -1);
-                
+
                 case Direction.Xyz: return new Hex(2, -1);
                 case Direction.xYz: return new Hex(-1, 2);
                 case Direction.xyZ: return new Hex(-1, -1);
                 case Direction.XYz: return new Hex(1, 1);
                 case Direction.xYZ: return new Hex(-2, 1);
                 case Direction.XyZ: return new Hex(1, -2);
-                
+
                 case Direction.Undefined:
                 default: return new Hex(0, 0);
             }
@@ -114,7 +114,7 @@ namespace HexGrid
 
 
 
-        /// <summary> Returns a <see cref="Tuple"/> representation of this <see cref="Hex"/> struct. </summary>
+        /// <summary> Returns a <see cref="Tuple"/> representation of this <see cref="Hex"/>. </summary>
         public (int X, int Y) AsTuple => (X, Y);
 
 
@@ -128,12 +128,12 @@ namespace HexGrid
         public Hex GetAdjacentInDirection(Direction dir)
         {
             bool dirIsValid =
-            (   dir == Direction.Xy 
-            ||  dir == Direction.Xz
-            ||  dir == Direction.Yx 
-            ||  dir == Direction.Yz 
-            ||  dir == Direction.Zx 
-            ||  dir == Direction.Zy);
+            (dir == Direction.Xy
+            || dir == Direction.Xz
+            || dir == Direction.Yx
+            || dir == Direction.Yz
+            || dir == Direction.Zx
+            || dir == Direction.Zy);
 
             return (dirIsValid) ? GetNeighborInDirection(dir) : Zero;
         }
@@ -200,7 +200,7 @@ namespace HexGrid
             }
             return ret;
         }
-        
+
         /// <summary> Rotates this <see cref="Hex"/> coordinate 60° in the given <see cref="RotationDirection"/> around a given [focal] point. </summary>
         /// <param name="focal"> The <see cref="Hex"/> point to rotate this <see cref="Hex"/> around. </param>
         /// <param name="dir"> The <see cref="RotationDirection"/> in which to rotate this <see cref="Hex"/> around the [focal] point.. </param>
@@ -317,7 +317,7 @@ namespace HexGrid
                         current.Add(candidate);
                     }
                 }
-                
+
                 // cleanup
                 foreach (Hex hex in current)
                 {
@@ -367,7 +367,7 @@ namespace HexGrid
         /// <param name="hex"> The <see cref="Hex"/> struct to multiply the values of by [t]. </param>
         /// <param name="t"> The value to multiply the given <see cref="Hex"/> struct's values by. </param>
         public static Hex operator *(Hex hex, float t) { return new Hex((int)Math.Round(hex.X * t), (int)Math.Round(hex.Y * t)); }
-        
+
         /// <summary> Returns a new <see cref="Hex"/> struct whose values equal the <see cref="Hex"/> struct's values multiplied by [t].
         /// <para> Points to the [*] operator which accepts a <see cref="Hex"/> as the first parameter and a <see cref="int"/> value as the second. </para></summary>
         /// <param name="hex"> The <see cref="Hex"/> struct to multiply the values of by [t]. </param>
