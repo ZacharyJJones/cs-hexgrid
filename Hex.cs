@@ -1,46 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HexGrid
 {
-    /// <summary> A struct which represents a discrete point in 2-D hexagonally-tiled space. </summary>
+    /// <summary> A struct which represents a discrete point in 2-D regularly-tiled hexagonal space. </summary>
     public readonly struct Hex : IEquatable<Hex>
     {
-        /// <summary> Enumeration describing a direction within a hexagonal grid-space. 
-        /// <para> Capital letters mean positive on that axis, while lowercase means negative. </para></summary>
+        /// <summary>
+        /// <para> Enumeration describing a direction within a hexagonal grid-space. </para> 
+        /// <para> Capital letters indicate a positive value on that axis, lowercase indicates negative values. </para>
+        /// </summary>
         public enum Direction
         {
             /// <summary> Obligatory 'Undefined' enumeration value. </summary>
             Undefined = 0,
 
-            /// <summary> Adjacent. X + 1, Z - 1 </summary>
+            /// <summary> Adjacent: X + 1, Z - 1 </summary>
             Xz,
-            /// <summary> Adjacent. X + 1, Y - 1 </summary>
+            /// <summary> Adjacent: X + 1, Y - 1 </summary>
             Xy,
-            /// <summary> Adjacent. Y + 1, X - 1 </summary>
+            /// <summary> Adjacent: Y + 1, X - 1 </summary>
             Yx,
-            /// <summary> Adjacent. Y + 1, Z - 1 </summary>
+            /// <summary> Adjacent: Y + 1, Z - 1 </summary>
             Yz,
-            /// <summary> Adjacent. Z + 1, X - 1 </summary>
+            /// <summary> Adjacent: Z + 1, X - 1 </summary>
             Zx,
-            /// <summary> Adjacent. Z + 1, Y - 1 </summary>
+            /// <summary> Adjacent: Z + 1, Y - 1 </summary>
             Zy,
 
-            /// <summary> Diagonal. X + 2, Y - 1, Z - 1 </summary>
+            /// <summary> Diagonal: X + 2, Y - 1, Z - 1 </summary>
             Xyz,
-            /// <summary> Diagonal. X - 1, Y + 2, Z - 1 </summary>
+            /// <summary> Diagonal: X - 1, Y + 2, Z - 1 </summary>
             xYz,
-            /// <summary> Diagonal. X - 1, Y - 1, Z + 2 </summary>
+            /// <summary> Diagonal: X - 1, Y - 1, Z + 2 </summary>
             xyZ,
 
-            /// <summary> Diagonal. X - 2, Y + 1, Z + 1 </summary>
+            /// <summary> Diagonal: X - 2, Y + 1, Z + 1 </summary>
             xYZ,
-            /// <summary> Diagonal. X + 1, Y - 2, Z + 1 </summary>
+            /// <summary> Diagonal: X + 1, Y - 2, Z + 1 </summary>
             XyZ,
-            /// <summary> Diagonal. X + 1, Y + 1, Z - 2 </summary>
+            /// <summary> Diagonal: X + 1, Y + 1, Z - 2 </summary>
             XYz
         }
 
@@ -57,33 +56,29 @@ namespace HexGrid
             CounterClockwise
         }
 
-        /// <summary> Returns a <see cref="Hex"/> vector value based on the givem <see cref="Direction"/>. </summary>
+        /// <summary> Returns a <see cref="Hex"/> vector value based on the given <see cref="Direction"/>. </summary>
         /// <param name="dir"> The <see cref="Direction"/> to acquire a <see cref="Hex"/> vector for. </param>
         public static Hex GetVectorFromDirection(Direction dir)
         {
-            Hex ret;
-
-            // adjacent
-            if (dir == Direction.Xy) ret = (1, -1);
-            else if (dir == Direction.Xz) ret = (1, 0);
-            else if (dir == Direction.Yx) ret = (-1, 1);
-            else if (dir == Direction.Yz) ret = (0, 1);
-            else if (dir == Direction.Zx) ret = (-1, 0);
-            else if (dir == Direction.Zy) ret = (0, -1);
-
-            // diagonal
-            else if (dir == Direction.Xyz) ret = (2, -1);
-            else if (dir == Direction.xYz) ret = (-1, 2);
-            else if (dir == Direction.xyZ) ret = (-1, -1);
-
-            else if (dir == Direction.XYz) ret = (1, 1);
-            else if (dir == Direction.xYZ) ret = (-2, 1);
-            else if (dir == Direction.XyZ) ret = (1, -2);
-
-            // fallback
-            else ret = Zero;
-
-            return ret;
+            switch (dir)
+            {
+                case Direction.Xy: return new Hex(1, -1);
+                case Direction.Xz: return new Hex(1, 0);
+                case Direction.Yx: return new Hex(-1, 1);
+                case Direction.Yz: return new Hex(0, 1);
+                case Direction.Zx: return new Hex(-1, 0);
+                case Direction.Zy: return new Hex(0, -1);
+                
+                case Direction.Xyz: return new Hex(2, -1);
+                case Direction.xYz: return new Hex(-1, 2);
+                case Direction.xyZ: return new Hex(-1, -1);
+                case Direction.XYz: return new Hex(1, 1);
+                case Direction.xYZ: return new Hex(-2, 1);
+                case Direction.XyZ: return new Hex(1, -2);
+                
+                case Direction.Undefined:
+                default: return new Hex(0, 0);
+            }
         }
 
 
@@ -109,19 +104,18 @@ namespace HexGrid
 
 
         /// <summary> The X-value of this <see cref="Hex"/> struct. </summary>
-        public int X { get; }
+        public readonly int X;
 
         /// <summary> The Y-value of this <see cref="Hex"/> struct. </summary>
-        public int Y { get; }
+        public readonly int Y;
 
         /// <summary> The Z-value of this <see cref="Hex"/> struct.  </summary>
-        public int Z { get; }
+        public readonly int Z;
 
 
 
         /// <summary> Returns a <see cref="Tuple"/> representation of this <see cref="Hex"/> struct. </summary>
-        public (int X, int Y) AsTuple { get { return (X, Y); } }
-
+        public (int X, int Y) AsTuple => (X, Y);
 
 
         /// <summary> Returns a <see cref="Hex"/> struct whose values are equal to this <see cref="Hex"/> plus a vector <see cref="Hex"/> via the given <see cref="Direction"/>. </summary>
