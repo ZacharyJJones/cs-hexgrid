@@ -233,11 +233,11 @@ namespace HexGrid
     }
 
     /// <summary> Returns a "ring" of Hex values which each are [distance] away from this starting coordinate. </summary>
-    public List<Hex> HexesAtDistance(int distance)
+    public List<Hex> HexesAtRadius(int radius)
     {
       // set up vars for stepping around the circumference (aka the 'ring')
       var currentVector = GetVectorFromDirection(HexDirection.SideXPos);
-      var currentPosition = this + (currentVector * distance);
+      var currentPosition = this + (currentVector * radius);
 
       // rotate vector to be aligned with side of ring correctly once loop starts.
       currentVector = currentVector.Rotate(RotationDirection.Clockwise);
@@ -248,7 +248,7 @@ namespace HexGrid
       {
         currentVector = currentVector.Rotate(RotationDirection.Clockwise);
 
-        for (int j = 0; j < distance; j++)
+        for (int j = 0; j < radius; j++)
         {
           ret.Add(currentPosition);
           currentPosition += currentVector;
