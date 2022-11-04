@@ -285,7 +285,7 @@ namespace HexGrid
         {
           foreach (var candidate in hex.Adjacents)
           {
-            if (ret[distance - 2].Contains(candidate)) continue;
+            if (distance >= 2 && ret[distance - 2].Contains(candidate)) continue;
             if (ret[distance - 1].Contains(candidate)) continue;
             if (ret[distance].Contains(candidate)) continue;
             if (obstacles.Contains(candidate)) continue;
