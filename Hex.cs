@@ -84,6 +84,20 @@ namespace HexGrid
 
     public (float X, float Y) InTwoDSpace => (X + 0.5f * Y, SQRT_3o2 * Y);
 
+    public static Hex FromTwoDSpace(float x, float y)
+    {
+      // x = coordX + 0.5f * coordY
+      // y = coordY * SQRT_3o2
+
+      // coordY = y / SQRT_3o2
+      // coordX = x - 0.5f * coordY
+
+      // Math should be correct...
+      int hexY = (int)Math.Round(y / SQRT_3o2);
+      int hexX = (int)Math.Round(x - 0.5f * hexY);
+      return new Hex(hexX, hexY);
+    }
+
     /// <summary> Returns the six Hex values which are adjacent to this one. </summary>
     public List<Hex> Adjacents
     {
