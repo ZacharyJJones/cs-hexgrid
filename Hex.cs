@@ -98,6 +98,33 @@ namespace HexGrid
       return new Hex(hexX, hexY);
     }
 
+    public static int BearingFromHexDirection(HexDirection direction)
+    {
+      switch (direction)
+      {
+        case HexDirection.SideYPos: return 30;
+        case HexDirection.DiagXPos: return 60;
+
+        case HexDirection.SideXPos: return 90;
+        case HexDirection.DiagZPos: return 120;
+
+        case HexDirection.SideZPos: return 150;
+        case HexDirection.DiagYNeg: return 180;
+
+        case HexDirection.SideYNeg: return -150;
+        case HexDirection.DiagXNeg: return -120;
+
+        case HexDirection.SideXNeg: return -90;
+        case HexDirection.DiagZNeg: return -60;
+
+        case HexDirection.SideZNeg: return -30;
+        case HexDirection.DiagYPos:
+        case HexDirection.Undefined:
+        default:
+          return 0;
+      }
+    }
+
     /// <summary> Returns the six Hex values which are adjacent to this one. </summary>
     public List<Hex> Adjacents
     {
